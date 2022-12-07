@@ -807,7 +807,8 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "log",
- "sdk",
+ "sdk_market",
+ "sdk_std",
  "simplelog",
  "wasmtime",
 ]
@@ -853,7 +854,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d29ab0c6d3fc0ee92fe66e2d99f700eab17a8d57d1c1d3b748380fb20baa78cd"
 
 [[package]]
-name = "sdk"
+name = "sdk_market"
+version = "0.1.0"
+
+[[package]]
+name = "sdk_std"
 version = "0.1.0"
 dependencies = [
  "rand",

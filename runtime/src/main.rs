@@ -1,13 +1,10 @@
-use anyhow::Result;
-use sdk::rand;
 use wasmtime::*;
 
 mod init;
 mod types;
 
-fn main() -> Result<()> {
+fn main() -> anyhow::Result<()> {
     init::log();
-    log::info!("123");
 
     let engine = Engine::default();
     let mut store = Store::new(
@@ -18,7 +15,7 @@ fn main() -> Result<()> {
     );
 
     let mut linker: Linker<types::State> = Linker::new(&engine);
-    linker.func_wrap("host", "rand_f64", rand::f64)?;
+    linker.func_wrap("host", "rand_f64", sdk_std::rand::f64)?;
 
     let module = Module::new(
         &engine,
