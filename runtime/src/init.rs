@@ -5,7 +5,7 @@ use simplelog::{ColorChoice, CombinedLogger, ConfigBuilder, TermLogger, Terminal
 pub fn log() {
     #[cfg(feature = "dev")]
     CombinedLogger::init(vec![TermLogger::new(
-        LevelFilter::Debug,
+        LevelFilter::Info,
         ConfigBuilder::new().set_time_format_rfc3339().build(),
         TerminalMode::Mixed,
         ColorChoice::Auto,

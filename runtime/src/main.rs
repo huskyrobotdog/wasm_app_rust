@@ -1,5 +1,3 @@
-use std::str::FromStr;
-
 use anyhow::Result;
 use sdk::rand;
 use wasmtime::*;
@@ -22,11 +20,15 @@ fn main() -> Result<()> {
     let mut linker: Linker<types::State> = Linker::new(&engine);
     linker.func_wrap("host", "rand_f64", rand::f64)?;
 
-    let module = Module::new(&engine, &[])?;
+    let module = Module::new(
+        &engine,
+        include_bytes!("../../target/wasm32-wasi/release/hello_wasm.wasm"),
+    )?;
     let instance = linker.instantiate(&mut store, &module)?;
 
-    let run = instance.get_typed_func::<(), (), _>(&mut store, "run")?;
+    let run = instance.get_typed_func::<(i32, i32), f64, _>(&mut store, "run")?;
 
-    run.call(&mut store, ())?;
+    let result = run.call(&mut store, (1, 3))?;
+    log::info!("result: {}", result);
     Ok(())
 }
